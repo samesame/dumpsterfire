@@ -1,0 +1,8 @@
+"dumpsterfire"
+{
+	"base"		"base"
+	"title"		"Dumpster Fire"
+	"maps"		"^df_"
+	"menusystem"	"1"
+	"workshopid"	"2601415158"
+}
