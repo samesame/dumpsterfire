@@ -19,6 +19,7 @@ end
 hook.Add("CalcView", "CalcThirdperson", CalcThirdperson)
  
 hook.Add("ShouldDrawLocalPlayer", "Survivor view", function(ply)
+        if ply:Team() == 0 then return end
         return true
 end)
 end
