@@ -6,9 +6,8 @@ function togglethirdperson()
     on = not on
 end
 
-net.Receive("sv_togglethirdperson")
-
 function CalcThirdperson(ply, pos, angles, fov)
+    if ply:Team() == 0 then return end
     local view = {}
         view.origin = pos-(angles:Forward()*80)
         view.angles = angles

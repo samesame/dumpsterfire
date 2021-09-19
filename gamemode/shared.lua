@@ -1,5 +1,5 @@
 GM.Name = "Dumpster Fire"
-GM.Author = "samdav, bunub, CoffeeWaffee"
+GM.Author = "samdav"
 GM.Email = "N/A"
 GM.Website = "N/A"
 

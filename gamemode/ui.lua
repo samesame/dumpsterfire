@@ -7,8 +7,8 @@ function GM:ScoreboardShow()
 
 	if!IsValid(ScoreboardDerma)then
 		ScoreboardDerma = vgui.Create("DFrame")
-		ScoreboardDerma:SetSize(400, 500)
-		ScoreboardDerma:SetPos(30, 825)
+		ScoreboardDerma:SetSize(400, 825)
+		ScoreboardDerma:SetPos(30, 500)
 		ScoreboardDerma:SetTitle("Survivor report")
 		ScoreboardDerma:SetDraggable(false)
 		ScoreboardDerma:ShowCloseButton(false)
@@ -37,10 +37,10 @@ function GM:ScoreboardShow()
 				draw.RoundedBox(0, 0, 53, PlayerPanel:GetWide(), 1, Color(255, 255, 255, 255))
 				
 				draw.SimpleText(v:GetName(), "DermaLarge", 20, 10, color_white)
-				draw.SimpleText((HealthState), "DermaLarge", 175, 10, HealthColor)
+				draw.SimpleText((HealthState), "DermaLarge", 375, 10, HealthColor, TEXT_ALIGN_RIGHT)
 
-				draw.SimpleText("Bloodpoints: "..v:Frags(), "DermaDefault", PlayerList:GetWide() - 20, 12, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
-				draw.SimpleText("Deaths: "..v:Deaths(), "DermaDefault", PlayerList:GetWide() - 20, 27, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+--				draw.SimpleText("Bloodpoints: "..v:Frags(), "DermaDefault", PlayerList:GetWide() - 20, 12, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+--				draw.SimpleText("Deaths: "..v:Deaths(), "DermaDefault", PlayerList:GetWide() - 20, 27, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
 				
 			end
 		end
@@ -63,8 +63,10 @@ function HUD()
 	if !client:Alive() then
 		return
 	end
-	
-	if client:Health() > 150 then
+	if client:Health() > 300 then
+		HealthState = "the Killer"
+		HealthColor = Color(255, 90, 255, 255)
+	elseif client:Health() > 150 then
 		HealthState = "Healthy"
 		HealthColor = Color(0, 255, 0, 255)
 	elseif client:Health() > 100 then
@@ -76,9 +78,6 @@ function HUD()
 	elseif client:Health() > 0 then
 		HealthState = "Dead"
 		HealthColor = Color(90, 90, 90, 255)
-	elseif client:Health() > 200 then
-		HealthState = "Killer"
-		HealthColor = Color(255, 90, 255, 255)
 	end
 	
 	draw.RoundedBox(5, 30, ScrH() - 105, 400, 75, Color(30, 30, 30, 230))
