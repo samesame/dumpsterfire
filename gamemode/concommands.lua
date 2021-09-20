@@ -40,3 +40,17 @@ concommand.Add("team", function(ply, cmd, args)
 	ply:SetTeam(args[1])
 	ply:Spawn()
 end )
+
+function team_0( ply )
+ 
+    ply:SetTeam( 0 )
+ 
+end
+ 
+function team_1( ply )
+ 
+    ply:SetTeam( 1 )
+end
+ 
+concommand.Add( "team_0", team_0 )
+concommand.Add( "team_1", team_1 )
