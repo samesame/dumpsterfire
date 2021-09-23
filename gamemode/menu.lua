@@ -27,6 +27,8 @@ end)
 
 function addButtons(Menu)
 
+-- Character tab
+
 	local CharButton = vgui.Create("DButton")
 	CharButton:SetParent(Menu)
 	CharButton:SetText("")
@@ -47,6 +49,8 @@ function addButtons(Menu)
 	CharButton.DoClick = function(CharButton)
 		local CharPanel = Menu:Add("CharPanel")
 	end
+
+-- Shop tab
 
 	local ShopButton = vgui.Create("DButton")
 	ShopButton:SetParent(Menu)
@@ -109,6 +113,7 @@ function PANEL:Paint(w, h)
 		draw.RoundedBox(5, 180, 50, 75, 75, Color(70, 70, 70, 255))
 	draw.DrawText("You can pick the survivor skin you would like to use\nNote that this will not affect gameplay.", "DermaDefault", 10, 300, Color( 255, 255, 255, 255 ), TEXT_ALIGN_LEFT)
 		draw.RoundedBox(5, 10, 50, 75, 75, Color(70, 70, 70, 255))
+
 end
 
 vgui.Register("CharPanel", PANEL, "Panel")

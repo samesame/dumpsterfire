@@ -32,7 +32,7 @@ PLAYER_KILLERS = {
 		walkspeed = 150,
 		runspeed = 250,
 		weapons = {"weapon_pounce", "weapon_physcannon"},
-		model = "models/player/charple.mdl",
+		model = "models/player/soldier_stripped.mdl",
 		modelscale = 1.2
 	},
 

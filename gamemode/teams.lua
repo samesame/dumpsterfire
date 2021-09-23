@@ -7,15 +7,15 @@ teams[0] = {
 	health = 200,
 	color = Vector(0, 0, 0.3),
 	weapons = {},
-	--model = "models/player/Group01/male_0" .. math.random(1,7) .. ".mdl"
+--  model = "models/player/Group01/male_0" .. math.random(1,7) .. ".mdl"
 	}
 			
 teams[1] = {
 	name = "Killers",
 	health = 500,
 	color = Vector(0.4, 0, 0.4),
-	weapons = {"weapon_physcannon"},
-	--model = "models/player/breen.mdl"
+	weapons = {},
+--  model = "models/player/breen.mdl"
 	}
 
 -- Global attributes
@@ -26,9 +26,9 @@ function ply:SetupTeam(n)
 	self:SetTeam(n)
 	self:SetPlayerColor(teams[n].color)
 	self:SetHealth(teams[n].health)
+	self:GiveWeapons(n)
 --	self:SetWalkSpeed(150)
 --	self:SetRunSpeed(250)
-	self:GiveWeapons(n)
 --	self:SetModel(teams[n].model)
 
 end

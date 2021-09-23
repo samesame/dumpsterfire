@@ -88,6 +88,15 @@ function HUD()
 	draw.RoundedBox(0, 280, ScrH() - 85, math.Clamp(client:Armor(), 0, 100) * 1.29, 35, Color(0, 0, 255, 255))
 	draw.RoundedBox(0, 280, ScrH() - 85, math.Clamp(client:Armor(), 0, 100) * 1.29, 5, Color(120, 120, 255, 255))
 
+
+-- Debug 
+
+	draw.SimpleText("Debug", "DermaDefault", 50, 1250, Color( 255, 255, 255, 255 ), 0, 0)
+	draw.SimpleText("Health: "..client:Health(), "DermaDefault", 50, 1270, Color( 255, 255, 255, 255 ), 0, 0)
+	draw.SimpleText("Team: "..client:Team(), "DermaDefault", 50, 1290, Color( 255, 255, 255, 255 ), 0, 0)
+
+--
+
 end
 hook.Add("HUDPaint", "TestHud", HUD)
 

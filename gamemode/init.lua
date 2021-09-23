@@ -17,6 +17,9 @@ local open = false
 
 function GM:PlayerInitialSpawn(ply)
 
+	local plyClass = PLAYER_KILLERS[ply:GetNWInt("playerClass")]
+	ply:SetupTeam(0)
+
 	ply:SetNWInt("playerClass", 1)
 
 	if (ply:GetPData("playerKwins") == nil) then
@@ -37,19 +40,36 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerSpawn(ply)
-	ply:SetupTeam(0)
 	local plyClass = PLAYER_KILLERS[ply:GetNWInt("playerClass")]
 
 	ply:SetWalkSpeed(plyClass.walkspeed)
 	ply:SetRunSpeed(plyClass.runspeed)
 	ply:SetModelScale(plyClass.modelscale, 0)
-	ply:SetModel("models/player/Group01/male_0" .. math.random(1,7) .. ".mdl")
 
 	ply:StripWeapons()
 
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
 	hook.Call("PlayerSetModel", GAMEMODE, ply)
+
+	trail = util.SpriteTrail(ply, 0, Color(100, 0, 0, 200), false, 10, 10, 10, 1/(20)*0.5, "effects/arrowtrail_red.vmt")
+
 end
+
+--[[ Sprint trails
+
+local ply = FindMetaTable("Player")
+local sprinting = ply:IsSprinting()
+
+	if IsValid(Player:IsSprinting())then
+		trail = util.SpriteTrail(ply, 0, Color(255, 0, 0, 60), false, 20, 0, 10, 1/(100)*0.5, "effects/arrowtrail_red")
+	elseif
+		SafeRemoveEntity(trail)
+	end
+end
+
+--]]
+
+
 
 function GM:PlayerLoadout(ply)
 	local plyClass = PLAYER_KILLERS[ply:GetNWInt("playerClass")]
@@ -121,23 +141,9 @@ function GM:ShowSpare2(ply)
 	net.Broadcast()
 end
 
---[[
-
-local ply = FindMetaTable("Player")
-local sprinting = ply:IsSprinting()
-
-	if IsValid(Player:IsSprinting())then
-		trail = util.SpriteTrail(ply, 0, Color(255, 0, 0, 60), false, 20, 0, 10, 1/(100)*0.5, "effects/arrowtrail_red")
-	elseif
-		SafeRemoveEntity(trail)
-	end
-end
-
 function GM:PlayerDeath(ply)
 	SafeRemoveEntity(trail)
 end 
-
---]]
 
 -- Fall damage adjustment
 
@@ -146,18 +152,18 @@ hook.Add( "GetFallDamage", "RealisticDamage", function( ply, speed )
 end )
 
 function GM:GravGunPunt(player, entity)
-	return false
+	return true
 end
 
 -- Player events
 
 function GM:OnNPCKilled(npc, attacker, inflictor)
-	inflictor:SetArmor(inflictor:Armor() + 1)
+	inflictor:SetArmor(inflictor:Armor() + 10)
 	attacker:SetNWInt("playerPoints", attacker:GetNWInt("playermoney") + 100)
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)
-	inflictor:SetArmor(inflictor:Armor() + 1)
+	inflictor:SetArmor(inflictor:Armor() + 10)
 	attacker:SetNWInt("playerPoints", attacker:GetNWInt("playermoney") + 100)
 
 end
