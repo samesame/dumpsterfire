@@ -18,7 +18,7 @@ local open = false
 function GM:PlayerInitialSpawn(ply)
 
 	local plyClass = PLAYER_KILLERS[ply:GetNWInt("playerClass")]
-	ply:SetupTeam(0)
+	ply:SetupTeam(1)
 
 	ply:SetNWInt("playerClass", 1)
 
@@ -40,35 +40,43 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerSpawn(ply)
+
 	local plyClass = PLAYER_KILLERS[ply:GetNWInt("playerClass")]
 
 	ply:SetWalkSpeed(plyClass.walkspeed)
 	ply:SetRunSpeed(plyClass.runspeed)
 	ply:SetModelScale(plyClass.modelscale, 0)
-
 	ply:StripWeapons()
-
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
 	hook.Call("PlayerSetModel", GAMEMODE, ply)
 
-	trail = util.SpriteTrail(ply, 0, Color(100, 0, 0, 200), false, 10, 10, 10, 1/(20)*0.5, "effects/arrowtrail_red.vmt")
-
 end
 
---[[ Sprint trails
+--hook.Add ("StartCommand", "StartCommandExample", function(ply, cmd)
+--	if (!ply:IsSprinting() then return 
+--
+--	else trail = util.SpriteTrail(ply, 0, Color(100, 0, 0, 200), false, 10, 10, 10, 1/(20)*0.5, "effects/arrowtrail_red.vmt")
+--
+--	end)
 
-local ply = FindMetaTable("Player")
-local sprinting = ply:IsSprinting()
+local teamsToApply = { -- This should be done in some kind of config file
+    "Killers",
+    "Survivors", 
+    "1"
+}
 
-	if IsValid(Player:IsSprinting())then
-		trail = util.SpriteTrail(ply, 0, Color(255, 0, 0, 60), false, 20, 0, 10, 1/(100)*0.5, "effects/arrowtrail_red")
-	elseif
-		SafeRemoveEntity(trail)
-	end
-end
+hook.Add("Move", "Trails.ApplyMove", function(ply, mv) -- Move hook, everytime when player moves
 
---]]
+    if not IsValid(ply.TeamTrail) and ply:IsSprinting() and table.HasValue(teamsToApply, tostring(ply:Team())) then -- When player is sprinting and the variable teamsToApply contains the players team
 
+        ply.TeamTrail = util.SpriteTrail(ply, 0, Color(100, 0, 0, 200), false, 10, 10, 10, 1/(20)*0.5, "trails/plasma") -- Apply trail and save it to player, so it doesnt get created 1000 times
+
+    elseif IsValid(ply.TeamTrail) then -- If the trail is active and the player is not sprinting, then remove it
+
+        ply.TeamTrail:Remove() -- Remove the saved trail
+
+    end
+end)
 
 
 function GM:PlayerLoadout(ply)
@@ -97,7 +105,6 @@ end
 		ply:SetNWInt("playerKwins", ply:GetPData("playerKwins"))
 	end	
 
-	if (ply:GetPData("playerSwins") == nil) then
 		ply:SetNWInt("playerSwins, 1")
 	else
 		ply:SetNWInt("playerSwins", ply:GetPData("playerSwins"))
@@ -152,7 +159,7 @@ hook.Add( "GetFallDamage", "RealisticDamage", function( ply, speed )
 end )
 
 function GM:GravGunPunt(player, entity)
-	return true
+	return false
 end
 
 -- Player events
